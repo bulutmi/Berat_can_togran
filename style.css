@@ -1,0 +1,298 @@
+/* ==========================================================================
+   1. TEMEL AYARLAR VE SIFIRLAMA (RESET)
+   Tarayıcıların varsayılan boşluklarını sıfırlıyoruz ki kontrol tamamen bizde olsun.
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    /* JS ile Lenis kullanacağımız için buradaki native smooth scroll'u kapatıyoruz
+       ancak fallback (yedek) olarak scroll-behavior eklenebilir */
+    scroll-behavior: auto; 
+}
+
+body {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden; /* Sağa sola kaymayı engeller */
+}
+
+/* Başlıklar için keskin ve modern Syne fontu */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   2. ÜST NAVİGASYON (NAVBAR)
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 50px;
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px); /* Arka planı hafif buzlu cam yapar */
+    border-bottom: 2px solid #000;
+    z-index: 100; /* Her zaman en üstte durmasını sağlar */
+}
+
+.logo {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 40px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    transition: opacity 0.3s ease;
+}
+
+.nav-links a:hover {
+    opacity: 0.5; /* Üzerine gelince zarifçe soluklaşır */
+}
+
+/* ==========================================================================
+   3. ANA GİRİŞ (HERO) EKRANI
+   ========================================================================== */
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 50px;
+    border-bottom: 2px solid #000;
+}
+
+.hero-title {
+    font-size: clamp(4rem, 10vw, 8rem); /* Ekrana göre otomatik büyüyüp küçülen dev punto */
+    font-weight: 800;
+    line-height: 0.9;
+    letter-spacing: -3px;
+    margin-bottom: 20px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* ==========================================================================
+   4. HİZMETLER BÖLÜMÜ (BENTO BOX MİMARİSİ)
+   ========================================================================== */
+.services-section {
+    padding: 100px 50px;
+    border-bottom: 2px solid #000;
+}
+
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 50px;
+}
+
+.bento-grid {
+    display: grid;
+    /* PC'de 3 sütun, ekrana sığmazsa otomatik alta geçer */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.bento-item {
+    border: 2px solid #000;
+    padding: 50px 30px;
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+/* Bento kutularının üzerine gelindiğinde siyah beyazın yer değiştirmesi (Invert effect) */
+.bento-item:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+/* ==========================================================================
+   5. RANDEVU VE VİDEO BÖLÜMÜ
+   ========================================================================== */
+.appointment-section {
+    padding: 100px 50px;
+    border-bottom: 2px solid #000;
+}
+
+.appointment-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Ekranı tam ortadan ikiye böler */
+    gap: 50px;
+    align-items: center;
+}
+
+.video-wrapper {
+    position: relative;
+}
+
+.video-tag {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: #000;
+    color: #fff;
+    padding: 5px 15px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.tutorial-video {
+    width: 100%;
+    border: 2px solid #000;
+    filter: grayscale(100%); /* Videoyu estetik dursun diye siyah beyaz yapar */
+    transition: filter 0.5s ease;
+}
+
+.tutorial-video:hover {
+    filter: grayscale(0%); /* Üzerine gelince renklenir */
+}
+
+.booking-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.booking-text {
+    font-size: 1.5rem;
+    line-height: 1.4;
+    font-weight: 300;
+}
+
+/* Buton Tasarımı */
+.btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background-color: #000;
+    color: #fff;
+    padding: 20px 40px;
+    text-decoration: none;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border: 2px solid #000;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #fff;
+    color: #000;
+}
+
+/* ==========================================================================
+   6. İLETİŞİM (FOOTER) BÖLÜMÜ
+   ========================================================================== */
+.contact-section {
+    padding: 100px 50px 50px 50px;
+}
+
+.contact-grid {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 100px;
+}
+
+.contact-item {
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.social-links {
+    display: flex;
+    gap: 20px;
+}
+
+.social-btn {
+    text-decoration: none;
+    color: #000;
+    border: 2px solid #000;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.social-btn:hover {
+    background-color: #000;
+    color: #fff;
+}
+
+.footer-bottom {
+    border-top: 2px solid #000;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+
+/* ==========================================================================
+   7. MOBİL UYUM (RESPONSIVE)
+   Telefon ekranlarında tasarımın bozulmadan alt alta dizilmesini sağlar
+   ========================================================================== */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .nav-links {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero-section, .services-section, .appointment-section, .contact-section {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .appointment-container {
+        grid-template-columns: 1fr; /* PC'de yan yana olan video ve butonu telefonda alt alta koyar */
+    }
+
+    .contact-grid {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
