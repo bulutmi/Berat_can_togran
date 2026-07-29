@@ -3,91 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Berat Can Toğran </title>
+    <title>Premium Barber Studio</title>
     
-    <!-- Modern ve keskin tipografi için Google Fonts -->
+    <!-- Modern Tipografi ve İkonlar -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
-    
-    <!-- Siyah/beyaz minimalist tasarıma en uygun ince ikon seti -->
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     
-    <!-- CSS Dosyamızın Bağlantısı -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- ÜST NAVİGASYON BÖLÜMÜ -->
-    <!-- Kullanıcı buradaki linklere tıkladığında JS ile pürüzsüzce o ID'ye sahip bölüme kayacak -->
+    <!-- 1. MADDE: Kumlanma (Film Grain) Efekti -->
+    <!-- Bu div tüm sayfanın üzerinde hafif bir dergi dokusu yaratır -->
+    <div class="noise-overlay"></div>
+
+    <!-- 2. MADDE: Özel Manyetik İmleç (Sadece PC'de görünecek) -->
+    <div class="custom-cursor">
+        <span class="cursor-text"></span>
+    </div>
+
+    <!-- ÜST NAVİGASYON -->
     <nav class="navbar">
         <div class="logo">STUDIO.</div>
         <ul class="nav-links">
-            <li><a href="#home">Ana Sayfa</a></li>
-            <li><a href="#services">Hizmetler</a></li>
-            <li><a href="#appointment">Randevu</a></li>
-            <li><a href="#contact">İletişim</a></li>
+            <li><a href="#home" class="magnetic-link">Ana Sayfa</a></li>
+            <li><a href="#services" class="magnetic-link">Hizmetler</a></li>
+            <li><a href="#appointment" class="magnetic-link">Randevu</a></li>
+            <li><a href="#contact" class="magnetic-link">İletişim</a></li>
         </ul>
     </nav>
 
-    <!-- 1. ANA GİRİŞ (HERO) BÖLÜMÜ -->
+    <!-- ANA GİRİŞ BÖLÜMÜ -->
     <section id="home" class="hero-section">
-        <h1 class="hero-title">CREATE<br>A< <br> >VİSİON</h1>
-        <p class="hero-subtitle">ekstra ekleyeceğimiz söz yeri hocam  </p>
+        <h1 class="hero-title">KUSURSUZ<br>KESİM.</h1>
+        <p class="hero-subtitle">Modern erkek bakımında yeni standart.</p>
     </section>
 
-    <!-- 2. HİZMETLER BÖLÜMÜ (Bento Box Mimarisi Burada Kurulacak) -->
+    <!-- 4. MADDE: Animasyonlu Kayan Şerit (Marquee) -->
+    <div class="marquee-divider">
+        <div class="marquee-track">
+            <span>// PREMIUM BARBER STUDIO // KUSURSUZ KESİM // BATMAN // EST. 2026 // </span>
+            <span>PREMIUM BARBER STUDIO // KUSURSUZ KESİM // BATMAN // EST. 2026 // </span>
+            <span>PREMIUM BARBER STUDIO // KUSURSUZ KESİM // BATMAN // EST. 2026 // </span>
+        </div>
+    </div>
+
+    <!-- HİZMETLER (3. MADDE: Otomatik Görsel Çıkan Kutu Sistemi) -->
     <section id="services" class="services-section">
         <h2 class="section-title">HİZMETLER.</h2>
         <div class="bento-grid">
-            <!-- CSS aşamasında bu kutuları asimetrik şık bir ızgaraya dönüştüreceğiz -->
-            <div class="bento-item">Saç Tasarımı</div>
-            <div class="bento-item">Sakal Şekillendirme</div>
-            <div class="bento-item">Cilt Bakımı & Maske</div>
+            
+            <!-- Kutu 1: Saç Tasarımı -->
+            <div class="bento-item" data-cursor="İNCELE">
+                <!-- Arka plan resmi buraya gelecek -->
+                <div class="bento-bg" style="background-image: url('sac-tasarimi.jpg');"></div>
+                <div class="bento-content">Saç Tasarımı</div>
+            </div>
+
+            <!-- Kutu 2: Sakal Şekillendirme -->
+            <div class="bento-item" data-cursor="İNCELE">
+                <div class="bento-bg" style="background-image: url('sakal-kesim.jpg');"></div>
+                <div class="bento-content">Sakal Şekillendirme</div>
+            </div>
+
+            <!-- Kutu 3: Cilt Bakımı -->
+            <div class="bento-item" data-cursor="İNCELE">
+                <div class="bento-bg" style="background-image: url('cilt-bakimi.jpg');"></div>
+                <div class="bento-content">Cilt Bakımı & Maske</div>
+            </div>
+            
         </div>
     </section>
 
-    <!-- 3. RANDEVU VE EĞİTİM VİDEOSU BÖLÜMÜ -->
+    <div class="marquee-divider border-top">
+        <div class="marquee-track" dir="rtl">
+            <span>// TARZINI YANSIT // ZAMANI YÖNET // RANDEVUNU AL // </span>
+            <span>TARZINI YANSIT // ZAMANI YÖNET // RANDEVUNU AL // </span>
+            <span>TARZINI YANSIT // ZAMANI YÖNET // RANDEVUNU AL // </span>
+        </div>
+    </div>
+
+    <!-- RANDEVU VE VİDEO (5. MADDE: İçsel Parallax) -->
     <section id="appointment" class="appointment-section">
         <h2 class="section-title">RANDEVU.</h2>
         
         <div class="appointment-container">
-            <!-- Sol Taraf: Eğitici Video -->
-            <div class="video-wrapper">
+            <!-- Sol Taraf: Eğitici Video (İçsel Parallax uygulanacak kapsayıcı) -->
+            <div class="video-wrapper parallax-container">
                 <p class="video-tag">Nasıl Randevu Alınır?</p>
-                <!-- Kendi videonuzu buraya ekleyeceksiniz -->
-                <video controls poster="video-kapak.jpg" class="tutorial-video">
+                <!-- İçteki video scroll sırasında hareket edecek -->
+                <video controls poster="video-kapak.jpg" class="tutorial-video parallax-inner">
                     <source src="randevu-egitim.mp4" type="video/mp4">
-                    Tarayıcınız video oynatmayı desteklemiyor.
                 </video>
             </div>
 
             <!-- Sağ Taraf: Yönlendirme Butonu -->
             <div class="booking-wrapper">
                 <p class="booking-text">Sıra bekleme, zamanını yönet. Sisteme giriş yaparak saniyeler içinde yerini ayırt.</p>
-                <!-- "target='_blank'" kodu, sitenin yeni sekmede açılmasını sağlar, böylece kendi sitemiz kapanmaz -->
-                <a href="https://haricirandevusistemi.com" target="_blank" class="btn-primary">
+                <a href="https://haricirandevusistemi.com" target="_blank" class="btn-primary magnetic-link" data-cursor="GİT">
                     Randevu Sistemine Git <i class="ri-arrow-right-up-line"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- 4. İLETİŞİM VE SOSYAL MEDYA BÖLÜMÜ (FOOTER) -->
+    <!-- İLETİŞİM (FOOTER) -->
     <footer id="contact" class="contact-section">
         <h2 class="section-title">İLETİŞİM.</h2>
         
         <div class="contact-grid">
-            <!-- Konum -->
             <div class="contact-item">
                 <i class="ri-map-pin-line"></i>
                 <p>Batman Merkez, Konum Adresi Buraya Gelecek</p>
             </div>
             
-            <!-- Sosyal Medya Linkleri -->
             <div class="social-links">
-                <a href="https://instagram.com/kullaniciadi" target="_blank" class="social-btn">
+                <a href="https://instagram.com/kullaniciadi" target="_blank" class="social-btn magnetic-link">
                     <i class="ri-instagram-line"></i> Instagram
                 </a>
-                <a href="https://tiktok.com/@kullaniciadi" target="_blank" class="social-btn">
+                <a href="https://tiktok.com/@kullaniciadi" target="_blank" class="social-btn magnetic-link">
                     <i class="ri-tiktok-fill"></i> TikTok
                 </a>
             </div>
@@ -98,17 +132,12 @@
         </div>
     </footer>
 
-    <!-- ANİMASYON VE İŞLEVSELLİK İÇİN JAVASCRIPT KÜTÜPHANELERİ -->
-    
-    <!-- GSAP (Dünyanın en iyi web animasyon motoru) -->
+    <!-- GSAP ve Lenis -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
-    <!-- Lenis (Yağ gibi akan pürüzsüz scroll hissiyatı için) -->
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
     
-    <!-- Kendi JS Dosyamızın Bağlantısı -->
+    <!-- JS Dosyamız -->
     <script src="app.js"></script>
-
 </body>
 </html>
