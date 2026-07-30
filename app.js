@@ -1,113 +1,95 @@
-/* ==========================================================================
-   1. LENIS - PÜRÜZSÜZ KAYDIRMA
-   ========================================================================== */
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-});
-
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
+// 1. LENIS KURULUMU
+const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
 requestAnimationFrame(raf);
 
-/* GSAP ScrollTrigger'ı Lenis ile senkronize ediyoruz */
 gsap.registerPlugin(ScrollTrigger);
 
-/* ==========================================================================
-   2. ÖZEL MANYETİK İMLEÇ (Sadece PC'de aktif)
-   ========================================================================== */
+// 2. MANYETİK İMLEÇ
 const cursor = document.querySelector('.custom-cursor');
 const cursorText = document.querySelector('.cursor-text');
 
-// Eğer cihaz dokunmatik değilse (fare kullanılıyorsa) imleci oynat
 if (window.matchMedia("(pointer: fine)").matches) {
-    
-    // Farenin ekrandaki konumunu gsap ile anlık takip et
-    let mouseX = 0; let mouseY = 0;
-    
     window.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        // İmleci gecikmesiz olarak farenin merkezine yerleştir
-        gsap.to(cursor, { x: mouseX, y: mouseY, duration: 0.1, ease: "power2.out" });
+        gsap.to(cursor, { x: e.clientX, y: e.clientY, duration: 0.1, ease: "power2.out" });
     });
 
-    // Yazı çıkması gereken "İncele" / "Git" gibi kutulara gelindiğinde
-    const hoverItems = document.querySelectorAll('[data-cursor]');
-    
-    hoverItems.forEach(item => {
+    document.querySelectorAll('[data-cursor]').forEach(item => {
         item.addEventListener('mouseenter', () => {
-            cursor.classList.add('active'); // İmleci büyüt
-            cursorText.textContent = item.getAttribute('data-cursor'); // İçine yazıyı yaz
+            cursor.classList.add('active');
+            cursorText.textContent = item.getAttribute('data-cursor');
         });
         item.addEventListener('mouseleave', () => {
-            cursor.classList.remove('active'); // Eski haline dön
+            cursor.classList.remove('active');
             cursorText.textContent = '';
         });
     });
 }
 
-/* ==========================================================================
-   3. MENÜ TIKLAMALARI İLE YUMUŞAK KAYMA
-   ========================================================================== */
+// 3. MENÜ YÖNLENDİRMELERİ
 document.querySelectorAll('.nav-links a').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
-        const targetId = this.getAttribute('href');
-        lenis.scrollTo(targetId, { offset: -90, duration: 1.5 });
+        lenis.scrollTo(this.getAttribute('href'), { offset: -90, duration: 1.5 });
     });
 });
 
-/* ==========================================================================
-   4. MARQUEE (KAYAN ŞERİT) SCROLL İLE HIZLANMASI
-   ========================================================================== */
-// Sayfadaki marquee şeritlerini yavaşça sürekli kaydır, sayfa aşağı kaydırıldıkça hızı artır
-const marqueeTracks = document.querySelectorAll('.marquee-track');
+// 4. OTOMATİK SLAYT (SLIDESHOW) MOTORU
+// Her bento kutusu içindeki slaytları bul ve her 3 saniyede bir değiştir
+const slideshows = document.querySelectorAll('.slideshow');
 
-marqueeTracks.forEach((track) => {
-    let direction = track.getAttribute('dir') === 'rtl' ? 1 : -1;
-    
-    gsap.to(track, {
-        xPercent: 50 * direction,
-        ease: "none",
-        scrollTrigger: {
-            trigger: track,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1 // Sayfa kaydırmasına (scroll) tepki verir
-        }
-    });
-});
-
-/* ==========================================================================
-   5. İÇSEL PARALLAX (VİDEO İÇİN)
-   ========================================================================== */
-// Video veya resim kabının içinde kayarken hafifçe aşağı doğru hareket eder
-gsap.to(".parallax-inner", {
-    yPercent: 20, // Aşağı doğru %20 hareket
-    ease: "none",
-    scrollTrigger: {
-        trigger: ".parallax-container",
-        start: "top bottom", // Konteyner ekranın altına değdiğinde başlar
-        end: "bottom top",   // Ekranda kaybolana kadar sürer
-        scrub: true          // Scroll hızına bağlanır
+slideshows.forEach(slideshow => {
+    const slides = slideshow.querySelectorAll('.slide');
+    if(slides.length > 1) { // Eğer 1'den fazla resim varsa döngüye sok
+        let currentSlide = 0;
+        
+        setInterval(() => {
+            // Önce mevcut resmin aktifliğini kaldır
+            slides[currentSlide].classList.remove('active');
+            
+            // Sıradaki resme geç, sona geldiyse başa dön
+            currentSlide = (currentSlide + 1) % slides.length;
+            
+            // Yeni resmi aktif et
+            slides[currentSlide].classList.add('active');
+        }, 3500); // 3.5 saniyede bir değişir
     }
 });
 
-/* ==========================================================================
-   6. YAZILARIN AŞAĞIDAN BELİRMESİ
-   ========================================================================== */
-gsap.from(".hero-title", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.2 });
-gsap.from(".hero-subtitle", { y: 50, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.5 });
-
-const sections = gsap.utils.toArray('section:not(.hero-section)');
-sections.forEach(section => {
-    gsap.from(section, {
-        y: 60, opacity: 0, duration: 1.2, ease: "power3.out",
-        scrollTrigger: { trigger: section, start: "top 85%", toggleActions: "play none none reverse" }
-    });
+// 5. İÇSEL PARALLAX (VİDEO)
+gsap.to(".parallax-inner", {
+    yPercent: 20, ease: "none",
+    scrollTrigger: { trigger: ".parallax-container", start: "top bottom", end: "bottom top", scrub: true }
 });
 
+// 6. GELİŞMİŞ SİNEMATİK KAYDIRMA ANİMASYONLARI
+// Hero elementleri
+gsap.from(".hero-bg", { scale: 1.2, opacity: 0, duration: 2, ease: "power3.out" });
+gsap.from(".hero-title", { y: 60, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.3 });
+gsap.from(".hero-logo", { y: 40, opacity: 0, duration: 1.5, ease: "power4.out", delay: 0.5 });
+
+// Scroll edildikçe gelen bölümler (Daha etkileyici bir giriş)
+const revealSections = gsap.utils.toArray('.gs-reveal');
+
+revealSections.forEach(section => {
+    const boxes = section.querySelectorAll('.gs-box');
+    
+    // Önce başlığı getir
+    gsap.from(section.querySelector('.section-title'), {
+        y: 50, opacity: 0, duration: 1, ease: "power3.out",
+        scrollTrigger: { trigger: section, start: "top 80%" }
+    });
+    
+    // Sonra içindeki kutuları sırayla (stagger) ve hafif büyüyerek getir
+    if(boxes.length > 0) {
+        gsap.from(boxes, {
+            y: 80,
+            opacity: 0,
+            scale: 0.95, // %95 boyuttan normal boyuta geçer
+            duration: 1.2,
+            stagger: 0.2, // Kutular arası 0.2 saniye gecikme
+            ease: "power3.out",
+            scrollTrigger: { trigger: section, start: "top 75%" }
+        });
+    }
+});
